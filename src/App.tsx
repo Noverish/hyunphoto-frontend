@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useCallback, useState } from 'react';
+import { uploladApi } from './api/upload';
+import { UploadImageList } from 'src/components';
+import './App.scss';
 
-function App() {
+
+export default function App() {
+  const [fileList, setFileList] = useState(null as FileList | null);
+
+  const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setFileList(e.target.files);
+  }, []);
+
+  const onUpload = useCallback(() => {
+    if (!fileList) {
+      console.error('fileList is null!');
+      return;
+    }
+
+    const file = fileList.item(0);
+    if (!file) {
+      console.error('file is null!');
+      return
+    }
+
+    uploladApi(file)
+      .then((data) => console.log(data));
+  }, [fileList]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <h1>HyunPhoto</h1>
+      <div className="input-group mb-3">
+        <input type="file" className="form-control" onChange={onChange} multiple />
+        <button type="button" className="btn btn-primary" onClick={onUpload}>업로드</button>
+      </div>
+      {fileList && <UploadImageList fileList={fileList}/>}
     </div>
   );
 }
-
-export default App;
