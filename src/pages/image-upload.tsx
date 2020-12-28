@@ -24,7 +24,7 @@ export default function ImageUploadPage() {
 
   return (
     <>
-      <div className="input-group mb-3">
+      <div className="input-group mb-2">
         <input type="file" className="form-control" onChange={onChange} multiple accept="image/*" />
         <button type="button" className="btn btn-primary" onClick={onUpload}>업로드</button>
       </div>
