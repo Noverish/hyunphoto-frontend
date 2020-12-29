@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { actionChannel, call, fork, put, take } from 'redux-saga/effects';
 import { IMAGE_THREAD_NUM, THUMBNAIL_SIZE } from 'src/envs';
 import { RootActions } from 'src/store';
+import { fileToDataURL } from 'src/utils';
 
 type GenerateThumbnailParams = {
   file: File;
@@ -26,21 +27,6 @@ function drawToCanvas(dataURL: string, canvas: HTMLCanvasElement): Promise<void>
       img.remove();
     }
     img.src = dataURL;
-  });
-}
-
-function fileToDataURL(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = function () {
-      const dataURL = reader.result;
-      if (dataURL) {
-        resolve(dataURL.toString());
-      } else {
-        reject(new Error(`DataURL of '${file.name}' is null`));
-      }
-    };
-    reader.readAsDataURL(file);
   });
 }
 

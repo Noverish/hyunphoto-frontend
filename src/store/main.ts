@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type State = {
   statusList: {[name: string]: number};
+  selectedFile: File | null;
 };
 
 const initialState = {
-  statusList: {}
+  statusList: {},
+  selectedFile: null,
 } as State;
 
 const slice = createSlice({
