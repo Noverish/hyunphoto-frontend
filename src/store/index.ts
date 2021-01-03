@@ -1,12 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import * as main from './main';
+import * as imageUpload from './image-upload';
 
 export const rootReducer = combineReducers({
-  main: main.reducer,
+  imageUpload: imageUpload.reducer,
 });
 
 export const RootActions = {
-  main: main.actions,
+  imageUpload: imageUpload.actions,
 }
 
 export type RootState = ReturnType<typeof rootReducer>;

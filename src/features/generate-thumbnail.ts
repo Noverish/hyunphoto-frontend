@@ -36,11 +36,11 @@ function* process(chan: any, i: number) {
     const { file } = payload;
 
     const dataURL = yield call(fileToDataURL, file);
-    yield put(RootActions.main.updateStatusList({ name: file.name, status: 1 }));
+    yield put(RootActions.imageUpload.updateStatusList({ name: file.name, status: 1 }));
 
     const canvas = document.getElementById(btoa(file.name)) as HTMLCanvasElement;
     yield call(drawToCanvas, dataURL, canvas);
-    yield put(RootActions.main.updateStatusList({ name: file.name, status: 2 }));
+    yield put(RootActions.imageUpload.updateStatusList({ name: file.name, status: 2 }));
   }
 }
 

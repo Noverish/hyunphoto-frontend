@@ -1,6 +1,7 @@
 import cs from 'classnames';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { generateThumbnail } from 'src/features/generate-thumbnail';
 import { RootActions, RootState } from 'src/store';
 import './upload-image.scss';
 
@@ -10,10 +11,16 @@ interface Props {
 
 export default function UploadImage({ file }: Props) {
   const dispatch = useDispatch();
-  const status = useSelector((state: RootState) => state.main.statusList[file.name]);
+  const status = useSelector((state: RootState) => state.imageUpload.statusList[file.name]);
+
+  useEffect(() => {
+    if (!status) {
+      dispatch(generateThumbnail({ file }));
+    }
+  }, [dispatch, file, status]);
 
   const onClick = useCallback(() => {
-    dispatch(RootActions.main.update({ selectedFile: file }));
+    dispatch(RootActions.imageUpload.update({ selectedFile: file }));
   }, [dispatch, file]);
 
   return (
