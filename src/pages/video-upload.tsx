@@ -15,7 +15,7 @@ export default function VideoUploadPage() {
     }
 
     const promises = Array.from({ length: fileList.length }, (_, i) => uploladApi(fileList[i], (ratio: number) => {
-      console.log(fileList[i].name, ratio);
+      
     }));
 
     Promise.all(promises)

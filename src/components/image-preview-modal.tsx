@@ -5,10 +5,11 @@ import { RootActions, RootState } from 'src/store';
 import { fileToDataURL } from 'src/utils';
 import usePinchZoom from "react-use-pinch-zoom";
 import './image-preview-modal.scss';
+import { UploadFile } from 'src/models';
 
 export default function ImagePreviewModal() {
   const dispatch = useDispatch();
-  const file = useSelector((state: RootState) => state.imageUpload.selectedFile);
+  const file: UploadFile | null = useSelector((state: RootState) => state.imageUpload.selectedFile);
   const [show, setShow] = useState(false);
   const [dataURL, setDataURL] = useState('');
 
@@ -17,7 +18,7 @@ export default function ImagePreviewModal() {
   useEffect(() => {
     if (file) {
       setShow(true);
-      fileToDataURL(file)
+      fileToDataURL(file.file)
         .then(setDataURL);
     }
   }, [file, dataURL]);
@@ -40,8 +41,6 @@ export default function ImagePreviewModal() {
     }
   }, [dispatch, file, show]);
 
-  console.log({ file: !!file, show, dataURL: !!dataURL });
-
   if (!file) {
     return <></>;
   }
@@ -49,7 +48,7 @@ export default function ImagePreviewModal() {
   const content = (dataURL)
     ? (
       <div className="image-wrapper">
-        <img className="image" src={dataURL} alt={file.name} {...contentProps} />
+        <img className="image" src={dataURL} alt={file.file.name} {...contentProps} />
         <button type="button" className="btn btn-danger" onClick={onDelete}>목록에서 제외</button>
       </div>
     ) : (

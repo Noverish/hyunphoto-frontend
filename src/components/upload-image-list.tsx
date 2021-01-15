@@ -1,14 +1,15 @@
 import React, { useMemo } from 'react';
+import { UploadFile } from 'src/models';
 import UploadImage from './upload-image';
 
 interface Props {
-  files: File[];
+  files: UploadFile[];
 }
 
 export default function UploadImageList({ files }: Props) {
   const imgs = useMemo(() => (
     files.map((file) => (
-      <div key={file.name} className="col">
+      <div key={file.file.name} className="col">
         <UploadImage file={file} />
       </div>
     ))

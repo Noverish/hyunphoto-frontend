@@ -1,11 +1,12 @@
 import { createAction } from '@reduxjs/toolkit';
 import { actionChannel, call, fork, put, take } from 'redux-saga/effects';
 import { IMAGE_THREAD_NUM, THUMBNAIL_SIZE } from 'src/envs';
+import { UploadFile, UploadFileStatus } from 'src/models';
 import { RootActions } from 'src/store';
 import { fileToDataURL } from 'src/utils';
 
 type GenerateThumbnailParams = {
-  file: File;
+  file: UploadFile;
 }
 
 export const generateThumbnail = createAction<GenerateThumbnailParams>("generateThumbnail");
@@ -30,17 +31,17 @@ function drawToCanvas(dataURL: string, canvas: HTMLCanvasElement): Promise<void>
   });
 }
 
-function* process(chan: any, i: number) {
+function* process(chan: any) {
   while (true) {
     const { payload }: ReturnType<typeof generateThumbnail> = yield take(chan)
     const { file } = payload;
 
-    const dataURL = yield call(fileToDataURL, file);
-    yield put(RootActions.imageUpload.updateStatusList({ name: file.name, status: 1 }));
+    const dataURL = yield call(fileToDataURL, file.file);
+    yield put(RootActions.imageUpload.updateFile({ origin: file, update: { status: UploadFileStatus.IMAGE_CONVERTING } }));
 
-    const canvas = document.getElementById(btoa(file.name)) as HTMLCanvasElement;
+    const canvas = document.getElementById(btoa(file.file.name)) as HTMLCanvasElement;
     yield call(drawToCanvas, dataURL, canvas);
-    yield put(RootActions.imageUpload.updateStatusList({ name: file.name, status: 2 }));
+    yield put(RootActions.imageUpload.updateFile({ origin: file, update: { status: UploadFileStatus.READY } }));
   }
 }
 
@@ -48,7 +49,7 @@ function* watch() {
   const chan: any = yield actionChannel(generateThumbnail.type);
 
   for (let i = 0; i < IMAGE_THREAD_NUM; i++) {
-    yield fork(process, chan, i)
+    yield fork(process, chan)
   }
 }
 

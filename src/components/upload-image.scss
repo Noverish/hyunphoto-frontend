@@ -1,5 +1,23 @@
 .upload-image {
   background-color: #BBBBBB;
+
+  .dim {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1024;
+
+    .progress {
+      height: 4px;
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      top: 50%;
+      transform: translate(0, -50%);
+
+      .progress-bar {
+        transition-duration: .1s;
+      }
+    }
+  }
   
   .spinner-container {
     display: flex;
