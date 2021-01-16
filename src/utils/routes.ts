@@ -5,5 +5,6 @@ export const album_detail_func = (albumId: number | string) => `/albums/${albumI
 export const album_detail = album_detail_func(':albumId');
 export const album_detail_albumId_parse = (m: match<any>): number => parseInt(m.params.albumId);
 
-export const image_upload = '/upload/image';
-export const video_upload = '/upload/video';
+export const album_upload_func = (albumId: number | string) => `/albums/${albumId}/upload`;
+export const album_upload = album_upload_func(':albumId');
+export const album_upload_albumId_parse = (m: match<any>): number => parseInt(m.params.albumId);

@@ -17,7 +17,7 @@ export default function AlbumPictureListComp(props: Props) {
 
       return (
         <div key={url} className="col">
-          <div className="ratio ratio-1x1 ">
+          <div className="ratio ratio-1x1" style={{ background: '#aaaaaa' }}>
             <img src={newUrl} alt={url} loading="lazy" />
           </div>
         </div>

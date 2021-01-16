@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UploadFile, UploadFileStatus } from "src/models";
+import { UploadFile } from "src/models";
 
 type State = {
   files: UploadFile[];
   selectedFile: UploadFile | null;
+  isUploading: boolean;
 };
 
 const initialState = {
   files: [],
   selectedFile: null,
+  isUploading: false,
 } as State;
 
 const slice = createSlice({
@@ -18,26 +20,15 @@ const slice = createSlice({
     set: (_, { payload }: PayloadAction<State>) => payload,
     update: (state: State, { payload }: PayloadAction<Partial<State>>) => ({ ...state, ...payload }),
     setFiles: (state: State, { payload }: PayloadAction<File[]>) => {
-      payload.forEach((file) => {
-        state.files.push({
-          file,
-          status: UploadFileStatus.FILE_LOADING,
-          progress: 0,
-        })
-      })
+      state.files = payload.map((file) => ({ file, dataURL: '', progress: 0 }))
     },
     updateFile: (state: State, { payload }: PayloadAction<{ origin: UploadFile, update: Partial<UploadFile> }>) => {
       const index = state.files.findIndex(v => v.file === payload.origin.file);
       state.files[index] = { ...payload.origin, ...payload.update };
     },
     deleteFile: (state: State, { payload }: PayloadAction<UploadFile>) => {
-      state.files = state.files.filter(v => v !== payload);
+      state.files = state.files.filter(v => v.file !== payload.file);
     },
-    statusToUpload: (state: State) => {
-      for(const file of state.files) {
-        file.status = UploadFileStatus.UPLOADING
-      }
-    }
   },
 });
 

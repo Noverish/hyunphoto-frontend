@@ -25,8 +25,21 @@
     align-items: center;
     justify-content: center;
   }
-}
 
-.spinner-border.slow {
-  animation-duration: 2s!important;
+  .file-type-icon {
+    div {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 0 6px 2px 6px;
+      border-radius: 4px;
+      margin: 4px;
+
+      i {
+        color: white;
+        font-size: 12px;
+      }
+    }
+  }
 }
