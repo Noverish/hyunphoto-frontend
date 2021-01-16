@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { uploladApi } from 'src/api/upload';
+import { uploadApi } from 'src/api';
 import { sizeToString } from 'src/utils';
 
 export default function VideoUploadPage() {
@@ -14,7 +14,7 @@ export default function VideoUploadPage() {
       return;
     }
 
-    const promises = Array.from({ length: fileList.length }, (_, i) => uploladApi(fileList[i], (ratio: number) => {
+    const promises = Array.from({ length: fileList.length }, (_, i) => uploadApi(fileList[i], (ratio: number) => {
       
     }));
 

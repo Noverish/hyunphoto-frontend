@@ -8,8 +8,10 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <div className="p-2">
+      <div>
         <Switch>
+          <Route path={routes.album_list} component={pages.AlbumListPage} />
+
           <Route path={routes.image_upload} component={pages.ImageUploadPage} />
           <Route path={routes.video_upload} component={pages.VideoUploadPage} />
           <Route><Redirect to={routes.image_upload} /></Route>

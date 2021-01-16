@@ -11,3 +11,9 @@ export type UploadFile = {
   status: UploadFileStatus;
   progress: number;
 }
+
+export type AlbumPreview = {
+  id: number;
+  name: string;
+  thumbnail: string;
+}

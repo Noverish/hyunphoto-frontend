@@ -1,10 +1,11 @@
-import axios, { AxiosRequestConfig } from 'axios';
 import { SERVER_URL } from 'src/envs';
+import axiosRequest from './request';
 
-export function uploladApi(file: File, callback?: (ratio: number) => void) {
+export default function uploadApi(file: File, callback?: (ratio: number) => void) {
   const formData = new FormData();
   formData.append('file', file);
-  const config: AxiosRequestConfig = {
+  
+  return axiosRequest({
     url: `${SERVER_URL}/upload`,
     method: 'post',
     headers: { 'content-type': 'multipart/form-data' },
@@ -13,6 +14,5 @@ export function uploladApi(file: File, callback?: (ratio: number) => void) {
       const ratio = Math.round((e.loaded * 1000) / e.total) / 10;
       callback?.(ratio);
     }
-  };
-  return axios(config).then(res => res.data);
+  });
 }
