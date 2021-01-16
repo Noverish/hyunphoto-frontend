@@ -1,5 +1,6 @@
 export { default as AlbumPreviewListComp } from './album/album-preview-list';
 export { default as AlbumPreviewComp } from './album/album-preview';
+export { default as AlbumPictureListComp } from './album/album-picture-list';
 
 export { default as UploadImageList } from './upload-image-list';
 export { default as NavBar } from './nav-bar';

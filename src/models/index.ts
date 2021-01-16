@@ -17,3 +17,10 @@ export type AlbumPreview = {
   name: string;
   thumbnail: string;
 }
+
+export type AlbumDetail = {
+  id: number;
+  name: string;
+  date: string;
+  pictures: string[];
+}

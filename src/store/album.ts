@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AlbumPreview } from "src/models";
+import { AlbumDetail, AlbumPreview } from "src/models";
 
 type State = {
   previews: AlbumPreview[];
+  detail: AlbumDetail | null;
 };
 
 const initialState = {
   previews: [],
+  detail: null,
 } as State;
 
 const slice = createSlice({

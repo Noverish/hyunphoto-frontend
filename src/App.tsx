@@ -10,7 +10,8 @@ export default function App() {
       <NavBar />
       <div>
         <Switch>
-          <Route path={routes.album_list} component={pages.AlbumListPage} />
+          <Route exact path={routes.album_list} component={pages.AlbumListPage} />
+          <Route exact path={routes.album_detail} component={pages.AlbumDetailPage} />
 
           <Route path={routes.image_upload} component={pages.ImageUploadPage} />
           <Route path={routes.video_upload} component={pages.VideoUploadPage} />
